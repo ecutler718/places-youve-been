@@ -1,31 +1,31 @@
 using Nancy;
-using Todo.Objects;
+using Travel.Objects;
 using System.Collections.Generic;
 
-namespace ToDoList
+namespace TravelList
 {
   public class HomeModule : NancyModule
   {
     public HomeModule()
-    {
+   {
       Get["/"] = _ => {
         return View ["index.cshtml"];
       };
-      Get["/tasks"] = _ => {
-        List<Task> allTasks = Task.GetAll();
-        return View["tasks.cshtml", allTasks];
+      Get["/places"] = _ => {
+        List<Place> allPlaces = Place.GetAll();
+        return View["places.cshtml", allPlaces];
       };
-      Get["/tasks/new"] = _ => {
-        return View["task_form.cshtml"];
+      Get["/places/new"] = _ => {
+        return View["place_form.cshtml"];
       };
-      Post["/tasks"] = _ => {
-        Task newTask = new Task(Request.Form["new-task"]);
-        List<Task> allTasks = Task.GetAll();
-        return View["tasks.cshtml", allTasks];
+      Post["/places"] = _ => {
+        Place newPlace = new Place(Request.Form["new-city"], Request.Form["new-country"]);
+        List<Place> allPlaces = Place.GetAll();
+        return View["places.cshtml", allPlaces];
       };
-      Get["tasks/{id}"] = parameters => {
-        Task task = Task.Find(parameters.id);
-        return View["task.cshtml", task];
+      Get["/places/{id}"] = parameters => {
+        Place place = Place.Find(parameters.id);
+        return View["/place.cshtml", place];
       };
     }
   }
